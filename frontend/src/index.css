@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Roboto:wght@400;500;700;900&family=Satisfy&display=swap');
+
+/* font-family: 'Itim', cursive;
+font-family: 'Roboto', sans-serif;
+font-family: 'Satisfy', cursive; */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #fff;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+main {
+  min-height: 80vh;
+  padding-bottom: 2rem;
+}
+
+h3 {
+  color: #000;
+  font-family: 'Itim', cursive;
+  padding: 0.5rem 0;
+}
+
+p {
+  color: #000;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+}
+
+.underline {
+  width: 60px;
+  height: 5px;
+  background: rgba(0, 0, 0, 0.56);
+}
+
+.--btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.--btn:hover {
+  color: rgb(192, 245, 245);
+  transition: all 0.5s;
+}
