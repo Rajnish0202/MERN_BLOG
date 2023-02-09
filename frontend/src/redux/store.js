@@ -3,10 +3,13 @@ import thunk from 'redux-thunk';
 
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { blogDetailsReducer, blogsReducer } from './reducers/blogsReducer';
+import { userReducer, userUpdateReducer } from './reducers/userReducer';
 
 const reducer = combineReducers({
   blogs: blogsReducer,
   blogDetails: blogDetailsReducer,
+  user: userReducer,
+  userProfile: userUpdateReducer,
 });
 
 let initialState = {};

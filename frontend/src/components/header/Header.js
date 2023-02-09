@@ -1,15 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './Header.module.css';
 import {
   FaFacebookSquare,
   FaGithubSquare,
   FaInstagramSquare,
-  FaSearch,
   FaTwitterSquare,
 } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { capitalizeText } from '../../utils/captilizeFirstLetter';
+import { logout } from '../../redux/actions/userAction';
 
 const Header = () => {
+  const { isLoggedIn, user } = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    }
+  }, [isLoggedIn, navigate]);
+
   return (
     <div className={styles.header}>
       <div className={styles.headerLeft}>
@@ -46,14 +63,40 @@ const Header = () => {
         </ul>
       </div>
       <div className={styles.headerRight}>
-        <ul className={styles.list}>
-          <li className={styles.listItem}>
-            <Link to='/login'>Login</Link>
-          </li>
-          <li className={styles.listItem}>
-            <Link to='/login'>Register</Link>
-          </li>
-        </ul>
+        {!isLoggedIn ? (
+          <ul className={styles.list}>
+            <li className={styles.listItem}>
+              <Link to='/login'>Login</Link>
+            </li>
+            <li className={styles.listItem}>
+              <Link to='/register'>Register</Link>
+            </li>
+          </ul>
+        ) : (
+          <ul className={styles.list}>
+            <li className={styles.listItem}>
+              <Link to='/profile' className={styles.userLink}>
+                <span>
+                  <img
+                    src={user?.avataar?.url}
+                    alt={user?.avataar?.public_id}
+                  />
+                </span>
+                <div title={user?.name}>
+                  {capitalizeText(user?.name).split(' ')[0]}
+                </div>
+              </Link>
+            </li>
+            <li className={styles.listItem}>
+              <button
+                className={`${styles.logout} --btn`}
+                onClick={logoutHandler}
+              >
+                Logout
+              </button>
+            </li>
+          </ul>
+        )}
       </div>
     </div>
   );

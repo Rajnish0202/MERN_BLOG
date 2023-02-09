@@ -51,6 +51,7 @@ const registerUser = asyncHandler(async (req, res) => {
   res.cookie('token', token, {
     httpOnly: true,
     expires: new Date(Date.now() + 1000 * 24 * 60 * 60 * 7), //7 days
+    // sameSite: 'none',
   });
 
   if (user) {
@@ -93,6 +94,7 @@ const loginUser = asyncHandler(async (req, res) => {
     res.cookie('token', token, {
       httpOnly: true,
       expires: new Date(Date.now() + 1000 * 60 * 24 * 60 * 7), //7 days
+      // sameSite: 'none',
     });
   }
 
@@ -138,31 +140,43 @@ const getUser = asyncHandler(async (req, res) => {
 
 // Update User Profile
 const updateProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const newUserData = {
+    name: req.body.name,
+    bio: req.body.bio,
+  };
 
-  const myCloud = await cloudinary.uploader.upload(req.body.avataar, {
-    folder: 'blog-avataars',
-    width: 150,
-    crop: 'scale',
+  if (req.body.avataar !== '') {
+    const user = await User.findById(req.user._id);
+
+    const imageId = user.avataar.public_id;
+    await cloudinary.uploader.destroy(imageId, {
+      folder: 'blog-avataars',
+    });
+
+    const myCloud = await cloudinary.uploader.upload(req.body.avataar, {
+      folder: 'blog-avataars',
+      width: 300,
+      crop: 'scale',
+    });
+
+    newUserData.avataar = {
+      public_id: myCloud.public_id || user?.avataar?.public_id,
+      url: myCloud.secure_url || user?.avataar?.url,
+    };
+
+    newUserData.email = user.email;
+  }
+
+  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
   });
 
-  if (user) {
-    const { name, email, avataar, bio } = user;
-    user.email = email;
-    user.name = req.body.name || name;
-    user.bio = req.body.bio || bio;
-    user.avataar =
-      { public_id: myCloud.public_id, url: myCloud.url } || avataar.url;
-
-    const updatedUser = await user.save();
-    res.status(200).json({
-      success: true,
-      updatedUser,
-    });
-  } else {
-    res.status(404);
-    throw new Error('User Not Found!');
-  }
+  res.status(201).json({
+    success: true,
+    user,
+  });
 });
 
 // Change Password
