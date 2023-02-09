@@ -2,6 +2,9 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import {
   CLEAR_ERRORS,
+  FORGOT_PASSWORD_FAIL,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
   LOAD_USER_FAIL,
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
@@ -13,6 +16,8 @@ import {
   REGISTER_FAIL,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
   UPDATE_PASSWORD_FAIL,
   UPDATE_PASSWORD_REQUEST,
   UPDATE_PASSWORD_SUCCESS,
@@ -111,7 +116,7 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
-// Update User Prifile
+// Update User Profile
 export const updateProfile = (formData) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUEST });
@@ -139,7 +144,7 @@ export const updateProfile = (formData) => async (dispatch) => {
   }
 };
 
-// Update User Prifile
+// Update User Password
 export const updatePassword = (passwords) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_PASSWORD_REQUEST });
@@ -167,6 +172,61 @@ export const updatePassword = (passwords) => async (dispatch) => {
   }
 };
 
+// FOGOT PASSWORD
+export const forgotPassword = (email) => async (dispatch) => {
+  try {
+    dispatch({ type: FORGOT_PASSWORD_REQUEST });
+
+    const config = { headers: { 'Content-Type': 'application/json' } };
+
+    const { data } = await axios.post(
+      `${BACKEND_URL}/api/users/forgotpassword`,
+      email,
+      config
+    );
+
+    dispatch({ type: FORGOT_PASSWORD_SUCCESS, payload: data });
+    toast.success(data.message);
+  } catch (error) {
+    dispatch({
+      type: FORGOT_PASSWORD_FAIL,
+      payload:
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString(),
+    });
+  }
+};
+
+// RESET PASSWORD
+export const resetPassword = (passwords, resetToken) => async (dispatch) => {
+  try {
+    dispatch({ type: RESET_PASSWORD_REQUEST });
+
+    const config = { headers: { 'Content-Type': 'application/json' } };
+
+    const { data } = await axios.put(
+      `${BACKEND_URL}/api/users/resetpassword/${resetToken}`,
+      passwords,
+      config
+    );
+
+    dispatch({ type: RESET_PASSWORD_SUCCESS, payload: data });
+    toast.success('Password Reset Successful, Please Login');
+  } catch (error) {
+    dispatch({
+      type: FORGOT_PASSWORD_FAIL,
+      payload:
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString(),
+    });
+  }
+};
 // Clearing Errors
 export const clearError = () => async (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });

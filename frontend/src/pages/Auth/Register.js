@@ -54,7 +54,7 @@ const Register = () => {
     }
 
     if (isLoggedIn) {
-      navigate('/');
+      navigate('/profile');
     }
   }, [error, dispatch, isLoggedIn, navigate]);
 

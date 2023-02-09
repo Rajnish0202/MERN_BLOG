@@ -9,11 +9,13 @@ import Register from './pages/Auth/Register';
 import Login from './pages/Auth/Login';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { loadUser } from './redux/actions/userAction';
+import { clearError, loadUser } from './redux/actions/userAction';
 import axios from 'axios';
 import UserProfile from './pages/UserProfile/UserProfile';
 import UpdateProfile from './pages/UserProfile/UpdateProfile';
 import UpdatePassword from './pages/UserProfile/UpdatePassword';
+import ForgotPassword from './pages/Auth/ForgotPassword';
+import ResetPassword from './pages/Auth/ResetPassword';
 
 axios.defaults.withCredentials = true;
 
@@ -34,6 +36,11 @@ function App() {
           <Route path='/:id' element={<BlogDetails />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/forgotpassword' element={<ForgotPassword />} />
+          <Route
+            path='/resetpassword/:resetToken'
+            element={<ResetPassword />}
+          />
 
           <Route
             path='/profile'

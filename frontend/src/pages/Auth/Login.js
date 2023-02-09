@@ -51,8 +51,8 @@ const Login = () => {
       dispatch(clearError());
     }
 
-    if (isLoggedIn) {
-      navigate('/');
+    if (isLoggedIn === true) {
+      navigate('/profile');
     }
   }, [error, dispatch, isLoggedIn, navigate]);
   return (
@@ -94,7 +94,7 @@ const Login = () => {
                 Login
               </button>
             </div>
-            <Link to='/forgot'>Forgot Password?</Link>
+            <Link to='/forgotpassword'>Forgot Password?</Link>
             <span className={styles.links}>
               <Link to='/'>Home</Link>
               <p>&nbsp; Don't have an account? &nbsp;</p>

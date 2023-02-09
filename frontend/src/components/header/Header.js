@@ -15,17 +15,10 @@ const Header = () => {
   const { isLoggedIn, user } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const logoutHandler = () => {
     dispatch(logout());
   };
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate('/login');
-    }
-  }, [isLoggedIn, navigate]);
 
   return (
     <div className={styles.header}>

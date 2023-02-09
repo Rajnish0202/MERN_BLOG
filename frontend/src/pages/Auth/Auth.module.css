@@ -96,3 +96,7 @@
   letter-spacing: 1px;
   font-weight: 500;
 }
+
+.forgot {
+  height: calc(100vh - 80px - 8px);
+}
