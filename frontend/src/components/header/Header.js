@@ -48,7 +48,7 @@ const Header = () => {
             <Link to='/myblog'>MyBlog</Link>
           </li>
           <li className={styles.listItem}>
-            <Link to='/postblog'>Write</Link>
+            <Link to='/writeblog'>Write</Link>
           </li>
           <li className={styles.listItem}>
             <Link to='/contactus'>Contact</Link>

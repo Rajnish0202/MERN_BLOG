@@ -3,7 +3,7 @@ export const capitalizeText = (text) => {
   const textUpper = [];
 
   for (const n of texts) {
-    textUpper.push(n.replace(n[0], n[0].toUpperCase()));
+    textUpper.push(n.replace(n[0], n[0]?.toUpperCase()));
   }
 
   return textUpper.join(' ');

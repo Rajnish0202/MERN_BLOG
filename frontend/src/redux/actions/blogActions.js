@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import {
   ALL_BLOG_FAIL,
   ALL_BLOG_REQUEST,
@@ -7,6 +8,18 @@ import {
   BLOG_DETAILS_REQUEST,
   BLOG_DETAILS_SUCCESS,
   CLEAR_ERRORS,
+  DELETE_BLOG_FAIL,
+  DELETE_BLOG_REQUEST,
+  DELETE_BLOG_SUCCESS,
+  MY_BLOG_FAIL,
+  MY_BLOG_REQUEST,
+  MY_BLOG_SUCCESS,
+  NEW_BLOG_FAIL,
+  NEW_BLOG_REQUEST,
+  NEW_BLOG_SUCCESS,
+  UPDATE_BLOG_FAIL,
+  UPDATE_BLOG_REQUEST,
+  UPDATE_BLOG_SUCCESS,
 } from '../constants/blogConstant';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -16,11 +29,19 @@ export const getAllBlogs = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_BLOG_REQUEST });
 
-    const { data } = await axios.get(`${BACKEND_URL}/api/blogs`);
+    const { data } = await axios.get(`${BACKEND_URL}/api/blogs/allblogs`);
 
     dispatch({ type: ALL_BLOG_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: ALL_BLOG_FAIL, payload: error.response.data.message });
+    dispatch({
+      type: ALL_BLOG_FAIL,
+      payload:
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString(),
+    });
   }
 };
 
@@ -33,7 +54,121 @@ export const getBlogDetails = (id) => async (dispatch) => {
 
     dispatch({ type: BLOG_DETAILS_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: BLOG_DETAILS_FAIL, payload: error.response.data.message });
+    dispatch({
+      type: BLOG_DETAILS_FAIL,
+      payload:
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString(),
+    });
+  }
+};
+
+// Getting all Blogs
+export const myBlogs = () => async (dispatch) => {
+  try {
+    dispatch({ type: MY_BLOG_REQUEST });
+
+    const { data } = await axios.get(`${BACKEND_URL}/api/blogs`);
+
+    dispatch({ type: MY_BLOG_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: MY_BLOG_FAIL,
+      payload:
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString(),
+    });
+  }
+};
+
+// Adding new blog
+export const newBlogs = (blogData) => async (dispatch) => {
+  try {
+    dispatch({ type: NEW_BLOG_REQUEST });
+
+    const config = {
+      headers: { 'Content-Type': 'multiform/form-data' },
+    };
+    const { data } = await axios.post(
+      `${BACKEND_URL}/api/blogs/postblog`,
+      blogData,
+      config
+    );
+
+    dispatch({ type: NEW_BLOG_SUCCESS, payload: data });
+    toast.success('Blog Added Successfully.');
+  } catch (error) {
+    dispatch({
+      type: NEW_BLOG_FAIL,
+      payload:
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString(),
+    });
+  }
+};
+
+// Udated Blog
+export const updateBlogs = (blogData, id) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_BLOG_REQUEST });
+
+    const config = {
+      headers: { 'Content-Type': 'multiform/form-data' },
+    };
+    const { data } = await axios.put(
+      `${BACKEND_URL}/api/blogs/myblog/${id}`,
+      blogData,
+      config
+    );
+
+    dispatch({ type: UPDATE_BLOG_SUCCESS, payload: data });
+    toast.success('Blog UpdatedSuccessfully.');
+  } catch (error) {
+    dispatch({
+      type: UPDATE_BLOG_FAIL,
+      payload:
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString(),
+    });
+  }
+};
+
+export const deleteBlogs = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_BLOG_REQUEST });
+
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+    };
+    const { data } = await axios.delete(
+      `${BACKEND_URL}/api/blogs/myblog/${id}`,
+      config
+    );
+
+    dispatch({ type: DELETE_BLOG_SUCCESS, payload: data });
+    toast.success(data.message);
+  } catch (error) {
+    dispatch({
+      type: DELETE_BLOG_FAIL,
+      payload:
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString(),
+    });
   }
 };
 

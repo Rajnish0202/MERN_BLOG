@@ -22,8 +22,8 @@ a {
 }
 
 main {
-  min-height: 80vh;
-  padding-bottom: 2rem;
+  /* min-height: 80vh; */
+  padding-bottom: 1rem;
 }
 
 h2 {
@@ -78,8 +78,8 @@ p {
 
 .--btn-primary:hover {
   background: rgba(0, 0, 0, 0.26);
-  color: #000;
-  transition: all 0.5s;
+  color: brown;
+  transition: all 0.5s linear;
 }
 
 .settings {
@@ -132,4 +132,46 @@ p {
   font-size: 18px;
   overflow: hidden;
   height: 10rem;
+  margin: 0.5rem 0;
+}
+
+.react-confirm-alert-overlay {
+  background: rgba(0, 0, 0, 0.45) !important;
+}
+
+.noBlog {
+  padding: 2rem 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: calc(100vh - 80px - 8px);
+}
+
+.noBlog > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 1rem;
+}
+
+.noBlog > div > h3 {
+  font-size: 30px;
+}
+
+.noBlog a {
+  font-size: 18px;
+  font-weight: 500;
+  background: brown;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  letter-spacing: 1px;
+  border-radius: 5px;
+}
+
+.noBlog a:hover {
+  color: brown;
+  background: rgb(192, 245, 245);
+  transition: all 0.5s linear;
 }

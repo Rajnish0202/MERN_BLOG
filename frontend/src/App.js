@@ -9,13 +9,16 @@ import Register from './pages/Auth/Register';
 import Login from './pages/Auth/Login';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { clearError, loadUser } from './redux/actions/userAction';
+import { loadUser } from './redux/actions/userAction';
 import axios from 'axios';
 import UserProfile from './pages/UserProfile/UserProfile';
 import UpdateProfile from './pages/UserProfile/UpdateProfile';
 import UpdatePassword from './pages/UserProfile/UpdatePassword';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import ResetPassword from './pages/Auth/ResetPassword';
+import MyBlogs from './pages/MyBlogs/MyBlogs';
+import WriteBlog from './pages/MyBlogs/WriteBlog';
+import UpdateBlog from './pages/MyBlogs/UpdateBlog';
 
 axios.defaults.withCredentials = true;
 
@@ -33,7 +36,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/:id' element={<BlogDetails />} />
+          <Route path='/blog/:id' element={<BlogDetails />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/forgotpassword' element={<ForgotPassword />} />
@@ -55,6 +58,21 @@ function App() {
           <Route
             path='/changepassword'
             element={isLoggedIn ? <UpdatePassword /> : <Login />}
+          />
+
+          <Route
+            path='/myblog'
+            element={isLoggedIn ? <MyBlogs /> : <Login />}
+          />
+
+          <Route
+            path='/writeblog'
+            element={isLoggedIn ? <WriteBlog /> : <Login />}
+          />
+
+          <Route
+            path='/editblog/:id'
+            element={isLoggedIn ? <UpdateBlog /> : <Login />}
           />
         </Routes>
       </Layout>

@@ -1,6 +1,9 @@
 .details {
   position: relative;
   width: 100%;
+  display: grid;
+  place-items: center;
+  height: 100%;
 }
 
 .banner {
@@ -32,12 +35,12 @@
 
 .blogDetails {
   width: 80%;
-  margin: auto;
-  transform: translateY(-30%);
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2);
   padding: 1rem 2rem;
   border-radius: 1rem;
   background: #fff;
+  margin-bottom: 2rem;
+  margin-top: -15rem;
 }
 
 .contant {
@@ -96,9 +99,44 @@
   width: 100%;
   object-fit: contain;
   border-radius: 1rem;
+  height: 35rem;
 }
 
 .desc {
   line-height: 1.3rem;
   padding: 0.5rem 0;
+}
+
+.post {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.action {
+  display: flex;
+  align-self: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.action button {
+  background: brown;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.action button:hover {
+  background: rgb(192, 245, 245);
+  color: brown;
+  transition: all 0.5s linear;
 }

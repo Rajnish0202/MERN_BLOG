@@ -81,11 +81,16 @@ const getBlogDetails = asyncHandler(async (req, res) => {
 });
 
 // Get All Blogs created by author
-const getMyBlogs = asyncHandler(async (req, res) => {
-  const blogs = await Blog.find({ author: user.id })
-    .populate('author', ['name', 'avataar', 'bio'])
+const myBlogs = asyncHandler(async (req, res) => {
+  const blogs = await Blog.find({ author: req.user._id })
+    .populate('author', ['avataar', 'bio', 'name'])
     .sort('-createdAt');
-  res.status(200).json({ success: true, blogCounts: blogs.length, blogs });
+
+  res.status(200).json({
+    success: true,
+    blogCounts: blogs.length,
+    blogs,
+  });
 });
 
 // Update Blog
@@ -145,6 +150,7 @@ const updateBlog = asyncHandler(async (req, res) => {
     {
       new: true,
       runValidators: true,
+      useFindAndModify: false,
     }
   );
 
@@ -184,7 +190,7 @@ module.exports = {
   postBlog,
   getAllBlog,
   getBlogDetails,
-  getMyBlogs,
+  myBlogs,
   updateBlog,
   deleteMyBlog,
 };
