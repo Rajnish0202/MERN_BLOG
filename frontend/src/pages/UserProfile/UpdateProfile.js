@@ -94,6 +94,9 @@ const UpdateProfile = () => {
             <Link to={`/changepassword`}>
               <li>Change Password</li>
             </Link>
+            <Link to={`/contact`}>
+              <li>Contact</li>
+            </Link>
           </ul>
         </div>
         <div className={styles.profileContainer}>

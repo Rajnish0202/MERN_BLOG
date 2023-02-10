@@ -39,8 +39,8 @@
 }
 
 .desc span p,
-h1,
-h2 {
+.desc span h1,
+.desc span h2 {
   display: contents;
 }
 

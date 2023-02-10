@@ -7,6 +7,7 @@ const cors = require('cors');
 const errorHandler = require('./middleware/errorHandler');
 const userRoute = require('./routes/userRoute');
 const blogRoute = require('./routes/blogRoute');
+const contactRoute = require('./routes/contactRoute');
 const fileUpload = require('express-fileupload');
 
 const app = express();
@@ -31,6 +32,7 @@ app.use(
 // Router Middleware
 app.use('/api/users', userRoute);
 app.use('/api/blogs', blogRoute);
+app.use('/api/contact', contactRoute);
 
 // Routes
 app.get('/', (req, res) => {

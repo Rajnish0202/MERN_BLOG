@@ -14,6 +14,7 @@ import {
   userReducer,
   userUpdateReducer,
 } from './reducers/userReducer';
+import { contactUsReducer } from './reducers/contactReducer';
 
 const reducer = combineReducers({
   blogs: blogsReducer,
@@ -24,6 +25,7 @@ const reducer = combineReducers({
   user: userReducer,
   userProfile: userUpdateReducer,
   forgotPassword: forgotPasswordReducer,
+  contactUs: contactUsReducer,
 });
 
 let initialState = {};

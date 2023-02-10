@@ -25,10 +25,14 @@ const UserProfile = () => {
             <Link to={`/changepassword`}>
               <li>Change Password</li>
             </Link>
+            <Link to={`/contact`}>
+              <li>Contact</li>
+            </Link>
           </ul>
         </div>
         <div className={styles.profileContainer}>
           <div>
+            <h2>User Profile: </h2>
             <div className={styles.imageContainer}>
               <img src={user?.avataar?.url} alt={user?.avataar?.public_id} />
             </div>

@@ -19,6 +19,7 @@ import ResetPassword from './pages/Auth/ResetPassword';
 import MyBlogs from './pages/MyBlogs/MyBlogs';
 import WriteBlog from './pages/MyBlogs/WriteBlog';
 import UpdateBlog from './pages/MyBlogs/UpdateBlog';
+import Contact from './pages/UserProfile/Contact';
 
 axios.defaults.withCredentials = true;
 
@@ -73,6 +74,11 @@ function App() {
           <Route
             path='/editblog/:id'
             element={isLoggedIn ? <UpdateBlog /> : <Login />}
+          />
+
+          <Route
+            path='/contact'
+            element={isLoggedIn ? <Contact /> : <Login />}
           />
         </Routes>
       </Layout>

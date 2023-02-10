@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Card from '../../components/Card/Card';
 import { clearError, updatePassword } from '../../redux/actions/userAction';
 import { UPDATE_PASSWORD_RESET } from '../../redux/constants/userConstant';
 import MetaData from '../../utils/MetaData';
@@ -71,48 +72,68 @@ const UpdatePassword = () => {
             <Link to={`/changepassword`}>
               <li className='active'>Change Password</li>
             </Link>
+            <Link to={`/contact`}>
+              <li>Contact</li>
+            </Link>
           </ul>
         </div>
         <div className={styles.profileContainer}>
-          <h2>Update Profile</h2>
-          <form onSubmit={updatePasswordSubmit}>
-            <div className={styles.formGroup}>
-              <label>Old Password:</label>
-              <input
-                type='password'
-                placeholder='Old Password'
-                value={oldPassword}
-                required
-                onChange={(e) => setOldPassword(e.target.value)}
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label>New Password:</label>
-              <input
-                type='password'
-                placeholder='New Password'
-                value={newPassword}
-                required
-                onChange={(e) => setNewPassword(e.target.value)}
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <label>Confirm Password:</label>
-              <input
-                type='password'
-                placeholder='Confirm Password'
-                value={confirmPassword}
-                required
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div>
+          <h2>Update Password</h2>
+          <div className={styles.infoBox}>
+            <form onSubmit={updatePasswordSubmit}>
+              <div className={styles.formGroup}>
+                <label>Old Password:</label>
+                <input
+                  type='password'
+                  placeholder='Old Password'
+                  value={oldPassword}
+                  required
+                  onChange={(e) => setOldPassword(e.target.value)}
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label>New Password:</label>
+                <input
+                  type='password'
+                  placeholder='New Password'
+                  value={newPassword}
+                  required
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+              </div>
+              <div className={styles.formGroup}>
+                <label>Confirm Password:</label>
+                <input
+                  type='password'
+                  placeholder='Confirm Password'
+                  value={confirmPassword}
+                  required
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
 
-            <input
-              type='submit'
-              value='Update Password'
-              className='--btn --btn-primary'
-            />
-          </form>
+              <input
+                type='submit'
+                value='Update Password'
+                className='--btn --btn-primary'
+              />
+            </form>
+            <div className={styles.details}>
+              <Card style={{ background: 'brown', color: '#fff' }}>
+                <h3>Password Change Instructions:</h3>
+                <div
+                  className='underline'
+                  style={{ background: '#fff', marginBottom: '.5rem' }}
+                ></div>
+                <p>Old password must be match.</p>
+                <p>New password and Confirm password must be match.</p>
+                <p>
+                  New password and Confirm password must be greater than 6
+                  characters.
+                </p>
+              </Card>
+            </div>
+          </div>
         </div>
       </section>
     </>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './Header.module.css';
 import {
   FaFacebookSquare,
@@ -6,7 +6,7 @@ import {
   FaInstagramSquare,
   FaTwitterSquare,
 } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { capitalizeText } from '../../utils/captilizeFirstLetter';
 import { logout } from '../../redux/actions/userAction';
@@ -51,7 +51,7 @@ const Header = () => {
             <Link to='/writeblog'>Write</Link>
           </li>
           <li className={styles.listItem}>
-            <Link to='/contactus'>Contact</Link>
+            <Link to='/about'>About</Link>
           </li>
         </ul>
       </div>
