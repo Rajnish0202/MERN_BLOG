@@ -12,4 +12,12 @@ const Loader = () => {
   );
 };
 
+export const Spinner = () => {
+  return (
+    <div className={styles.spinner}>
+      <div></div>
+    </div>
+  );
+};
+
 export default Loader;

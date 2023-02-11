@@ -72,8 +72,8 @@ const BlogDetails = () => {
   return (
     <>
       <MetaData title={`Blog Details: ${blog._id}`} />
-      {loading && <Loader />}
       <section className={styles.details}>
+        {loading && <Loader />}
         <div className={styles.banner}>
           <img src={bannerImg} alt={blog.title} />
           <div className={styles.back}>

@@ -25,25 +25,30 @@ import {
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 // Getting all Blogs
-export const getAllBlogs = () => async (dispatch) => {
-  try {
-    dispatch({ type: ALL_BLOG_REQUEST });
+export const getAllBlogs =
+  (page, sort, search, filterCategory) => async (dispatch) => {
+    try {
+      dispatch({ type: ALL_BLOG_REQUEST });
 
-    const { data } = await axios.get(`${BACKEND_URL}/api/blogs/allblogs`);
+      const { data } = await axios.get(
+        `${BACKEND_URL}/api/blogs/allblogs?page=${page}&sort=${sort?.sort},${
+          sort.order
+        }&category=${filterCategory?.toString()}&search=${search}`
+      );
 
-    dispatch({ type: ALL_BLOG_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: ALL_BLOG_FAIL,
-      payload:
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString(),
-    });
-  }
-};
+      dispatch({ type: ALL_BLOG_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: ALL_BLOG_FAIL,
+        payload:
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString(),
+      });
+    }
+  };
 
 // Getting Blogs Details
 export const getBlogDetails = (id) => async (dispatch) => {
@@ -67,25 +72,30 @@ export const getBlogDetails = (id) => async (dispatch) => {
 };
 
 // Getting all Blogs
-export const myBlogs = () => async (dispatch) => {
-  try {
-    dispatch({ type: MY_BLOG_REQUEST });
+export const myBlogs =
+  (page, sort, search, filterCategory) => async (dispatch) => {
+    try {
+      dispatch({ type: MY_BLOG_REQUEST });
 
-    const { data } = await axios.get(`${BACKEND_URL}/api/blogs`);
+      const { data } = await axios.get(
+        `${BACKEND_URL}/api/blogs?page=${page}&sort=${sort?.sort},${
+          sort.order
+        }&category=${filterCategory?.toString()}&search=${search}`
+      );
 
-    dispatch({ type: MY_BLOG_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: MY_BLOG_FAIL,
-      payload:
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString(),
-    });
-  }
-};
+      dispatch({ type: MY_BLOG_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: MY_BLOG_FAIL,
+        payload:
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString(),
+      });
+    }
+  };
 
 // Adding new blog
 export const newBlogs = (blogData) => async (dispatch) => {

@@ -36,6 +36,10 @@ export const blogsReducer = (state = { blogs: [] }, action) => {
         loading: false,
         blogs: action.payload.blogs,
         categories: action.payload.categories,
+        limit: action.payload.limit,
+        total: action.payload.total,
+        page: action.payload.page,
+        blogCounts: action.payload.blogCounts,
       };
 
     case ALL_BLOG_FAIL:
@@ -100,6 +104,11 @@ export const myBlogsReducer = (state = { blogs: [] }, action) => {
       return {
         loading: false,
         blogs: action.payload.blogs,
+        limit: action.payload.limit,
+        total: action.payload.total,
+        page: action.payload.page,
+        blogCounts: action.payload.blogCounts,
+        categories: action.payload.categories,
       };
 
     case MY_BLOG_FAIL:

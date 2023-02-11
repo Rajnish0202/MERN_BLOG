@@ -113,14 +113,51 @@ const getBlogDetails = asyncHandler(async (req, res) => {
 
 // Get All Blogs created by author
 const myBlogs = asyncHandler(async (req, res) => {
-  const blogs = await Blog.find({ author: req.user._id })
-    .populate('author', ['avataar', 'bio', 'name'])
-    .sort('-createdAt');
+  const page = parseInt(req.query.page) - 1 || 0;
+  const limit = parseInt(req.query.limit) || 5;
+  const search = req.query.search || '';
+  let sort = req.query.sort || 'createdAt';
+  let category = req.query.category || 'All';
+
+  const categories = await Blog.find().distinct('category');
+
+  category === 'All'
+    ? (category = [...categories])
+    : (category = req.query.category.split(','));
+
+  req.query.sort ? (sort = req.query.sort.split(',')) : (sort = [sort]);
+
+  let sortBy = {};
+  if (sort[1]) {
+    sortBy[sort[0]] = sort[1];
+  } else {
+    sortBy[sort[0]] = 'asc';
+  }
+
+  const blogs = await Blog.find({
+    author: req.user._id,
+    title: { $regex: search, $options: 'i' },
+  })
+    .where('category')
+    .in([...category])
+    .sort(sortBy)
+    .skip(page * limit)
+    .limit(limit)
+    .populate('author', ['name', 'avataar', 'bio']);
+
+  const total = await Blog.countDocuments({
+    category: { $in: [...categories] },
+    title: { $regex: search, $options: 'i' },
+  });
 
   res.status(200).json({
     success: true,
+    total,
+    page: page + 1,
+    limit,
     blogCounts: blogs.length,
     blogs,
+    categories,
   });
 });
 

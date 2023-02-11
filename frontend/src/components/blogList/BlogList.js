@@ -7,14 +7,14 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import DOMPurify from 'dompurify';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-import Loader from '../Loader/Loader';
+import { Spinner } from '../Loader/Loader';
 
 const BlogList = ({
-  loading,
   blogs,
   user,
   deleteLoading,
   blogDeleteHandler,
+  loading,
 }) => {
   const confirmDelete = (id) => {
     confirmAlert({
@@ -35,8 +35,8 @@ const BlogList = ({
 
   return (
     <>
-      {loading && <Loader />}
       <div className={styles.blogList}>
+        {loading && <Spinner />}
         {blogs &&
           blogs.map((blog) => {
             return (
