@@ -15,7 +15,7 @@ const Sidebar = () => {
         </button>
       </div>
       <div className={styles.filterByCategory}>
-        <label>Category: </label>
+        <label>Search by category: </label>
         <select name='' id=''>
           <option value='All'>All</option>
           {categories &&
