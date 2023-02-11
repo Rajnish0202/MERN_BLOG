@@ -7,6 +7,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import DOMPurify from 'dompurify';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import Loader from '../Loader/Loader';
 
 const BlogList = ({
   loading,
@@ -34,7 +35,7 @@ const BlogList = ({
 
   return (
     <>
-      {loading && <p>Loading...</p>}
+      {loading && <Loader />}
       <div className={styles.blogList}>
         {blogs &&
           blogs.map((blog) => {

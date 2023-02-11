@@ -20,6 +20,7 @@ import MyBlogs from './pages/MyBlogs/MyBlogs';
 import WriteBlog from './pages/MyBlogs/WriteBlog';
 import UpdateBlog from './pages/MyBlogs/UpdateBlog';
 import Contact from './pages/UserProfile/Contact';
+import About from './pages/About/About';
 
 axios.defaults.withCredentials = true;
 
@@ -37,6 +38,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/about' element={<About />} />
           <Route path='/blog/:id' element={<BlogDetails />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />

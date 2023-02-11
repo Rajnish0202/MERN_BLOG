@@ -15,6 +15,7 @@ import DOMPurify from 'dompurify';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { DELETE_BLOG_RESET } from '../../redux/constants/blogConstant';
 import { confirmAlert } from 'react-confirm-alert';
+import Loader from '../../components/Loader/Loader';
 
 const BlogDetails = () => {
   const { loading, error, blog } = useSelector((state) => state.blogDetails);
@@ -71,7 +72,7 @@ const BlogDetails = () => {
   return (
     <>
       <MetaData title={`Blog Details: ${blog._id}`} />
-      {loading && <p>Loading...</p>}
+      {loading && <Loader />}
       <section className={styles.details}>
         <div className={styles.banner}>
           <img src={bannerImg} alt={blog.title} />

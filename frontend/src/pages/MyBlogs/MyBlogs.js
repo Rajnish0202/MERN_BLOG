@@ -13,6 +13,7 @@ import { DELETE_BLOG_RESET } from '../../redux/constants/blogConstant';
 import MetaData from '../../utils/MetaData';
 import styles from './MyBlog.module.css';
 import { BsEmojiFrown } from 'react-icons/bs';
+import Loader from '../../components/Loader/Loader';
 
 const MyBlogs = () => {
   const { user } = useSelector((state) => state.user);
@@ -46,6 +47,7 @@ const MyBlogs = () => {
   return (
     <>
       <MetaData title={`${user?.name}'s Blog`} />
+      {loading && <Loader />}
       {blogs.length === 0 ? (
         <section className='noBlog'>
           <div>

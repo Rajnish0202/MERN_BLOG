@@ -12,6 +12,7 @@ import {
   updateProfile,
 } from '../../redux/actions/userAction';
 import { UPDATE_USER_RESET } from '../../redux/constants/userConstant';
+import Loader from '../../components/Loader/Loader';
 
 const UpdateProfile = () => {
   const { user } = useSelector((state) => state.user);
@@ -81,7 +82,7 @@ const UpdateProfile = () => {
   return (
     <>
       <MetaData title={`Update Profile`} />
-      {loading && <p>Loading...</p>}
+      {loading && <Loader />}
       <section className={styles.profile}>
         <div className='settings'>
           <ul>
@@ -153,6 +154,7 @@ const UpdateProfile = () => {
               type='submit'
               value='Update Profile'
               className='--btn --btn-primary'
+              disabled={loading ? true : false}
             />
           </form>
         </div>

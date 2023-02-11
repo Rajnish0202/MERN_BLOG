@@ -3,6 +3,7 @@ import ReactQuill from 'react-quill';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Loader from '../../components/Loader/Loader';
 import {
   clearError,
   getBlogDetails,
@@ -80,6 +81,7 @@ const UpdateBlog = () => {
     <>
       <MetaData title='Update Blog' />
       <section className={styles.writeBlog}>
+        {loading && <Loader />}
         <form
           className={styles.form}
           encType='multiform/form-data'

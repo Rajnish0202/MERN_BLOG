@@ -3,6 +3,7 @@ import ReactQuill from 'react-quill';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Loader from '../../components/Loader/Loader';
 import { clearError, newBlogs } from '../../redux/actions/blogActions';
 import { NEW_BLOG_RESET } from '../../redux/constants/blogConstant';
 import MetaData from '../../utils/MetaData';
@@ -62,6 +63,7 @@ const WriteBlog = () => {
     <>
       <MetaData title='Write Blog' />
       <section className={styles.writeBlog}>
+        {loading && <Loader />}
         <form
           className={styles.form}
           encType='multiform/form-data'

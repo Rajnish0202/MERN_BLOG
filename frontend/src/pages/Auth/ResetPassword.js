@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Loader from '../../components/Loader/Loader';
 import { clearError, resetPassword } from '../../redux/actions/userAction';
 import MetaData from '../../utils/MetaData';
 import styles from './Auth.module.css';
@@ -47,7 +48,7 @@ const ResetPassword = () => {
   return (
     <>
       <MetaData title='Reset Password' />
-      {loading && <p>Loading...</p>}
+      {loading && <Loader />}
       <div className={`${styles.form} ${styles.forgot}`}>
         <form onSubmit={formSubmit}>
           <h2>Reset Password</h2>

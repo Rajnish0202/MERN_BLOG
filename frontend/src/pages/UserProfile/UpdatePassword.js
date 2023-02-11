@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Card from '../../components/Card/Card';
+import Loader from '../../components/Loader/Loader';
 import { clearError, updatePassword } from '../../redux/actions/userAction';
 import { UPDATE_PASSWORD_RESET } from '../../redux/constants/userConstant';
 import MetaData from '../../utils/MetaData';
@@ -59,7 +60,7 @@ const UpdatePassword = () => {
   return (
     <>
       <MetaData title={`Update Password`} />
-      {loading && <p>Loading...</p>}
+      {loading && <Loader />}
       <section className={styles.profile}>
         <div className='settings'>
           <ul>
@@ -116,6 +117,7 @@ const UpdatePassword = () => {
                 type='submit'
                 value='Update Password'
                 className='--btn --btn-primary'
+                disabled={loading ? true : false}
               />
             </form>
             <div className={styles.details}>

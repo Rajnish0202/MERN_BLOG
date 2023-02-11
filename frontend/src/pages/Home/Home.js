@@ -13,6 +13,7 @@ import {
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { DELETE_BLOG_RESET } from '../../redux/constants/blogConstant';
+import Loader from '../../components/Loader/Loader';
 
 const Home = () => {
   const { user } = useSelector((state) => state.user);
@@ -51,6 +52,7 @@ const Home = () => {
   return (
     <>
       <MetaData title='Home' />
+      {loading && <Loader />}
       <HeroBanner />
       <section className={styles.home}>
         <BlogList

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Loader from '../../components/Loader/Loader';
 import { clearError, register } from '../../redux/actions/userAction';
 import MetaData from '../../utils/MetaData';
 import { validateEmail } from '../../utils/validateEmail';
@@ -13,7 +14,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const { error, isLoggedIn } = useSelector((state) => state.user);
+  const { error, isLoggedIn, loading } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -62,6 +63,8 @@ const Register = () => {
     <>
       <MetaData title='Register' />
       <div className={`${styles.auth} ${styles.register}`}>
+        {loading && <Loader />}
+
         <div className={styles.form}>
           <form onSubmit={formSubmit}>
             <h2>Register</h2>

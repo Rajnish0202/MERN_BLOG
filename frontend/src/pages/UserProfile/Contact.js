@@ -9,6 +9,7 @@ import MetaData from '../../utils/MetaData';
 import styles from './UserProfile.module.css';
 import { toast } from 'react-toastify';
 import { clearError, contactUs } from '../../redux/actions/contactAction';
+import Loader from '../../components/Loader/Loader';
 
 const Contact = () => {
   const [subject, setSubject] = useState('');
@@ -49,7 +50,7 @@ const Contact = () => {
   return (
     <>
       <MetaData title={`Contact Us`} />
-      {loading && <p>Loading...</p>}
+      {loading && <Loader />}
       <section className={styles.profile}>
         <div className='settings'>
           <ul>
@@ -98,6 +99,7 @@ const Contact = () => {
                 type='submit'
                 value='Send Message'
                 className='--btn --btn-primary'
+                disabled={loading ? true : false}
               />
             </form>
             <div className={styles.details}>

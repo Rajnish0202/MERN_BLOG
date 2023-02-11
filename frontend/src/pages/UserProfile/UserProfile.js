@@ -5,6 +5,7 @@ import { capitalizeText } from '../../utils/captilizeFirstLetter';
 import MetaData from '../../utils/MetaData';
 import styles from './UserProfile.module.css';
 import DOMPurify from 'dompurify';
+import Loader from '../../components/Loader/Loader';
 
 const UserProfile = () => {
   const { user, loading } = useSelector((state) => state.user);
@@ -12,7 +13,7 @@ const UserProfile = () => {
   return (
     <>
       <MetaData title={`${capitalizeText(user?.name)}'s Profile`} />
-      {loading && <p>Loading...</p>}
+      {loading && <Loader />}
       <section className={styles.profile}>
         <div className='settings'>
           <ul>

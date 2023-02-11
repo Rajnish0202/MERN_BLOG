@@ -6,13 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { validateEmail } from '../../utils/validateEmail';
 import { clearError, login } from '../../redux/actions/userAction';
+import Loader from '../../components/Loader/Loader';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const { error, isLoggedIn } = useSelector((state) => state.user);
+  const { error, isLoggedIn, loading } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ const Login = () => {
     <>
       <MetaData title='Login' />
       <div className={`${styles.auth} ${styles.login}`}>
+        {loading && <Loader />}
         <div className={styles.form}>
           <form onSubmit={formSubmit}>
             <h2>Login</h2>
