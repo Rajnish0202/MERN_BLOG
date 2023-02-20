@@ -51,6 +51,10 @@ select {
   cursor: pointer;
 }
 
+input[type='file'] {
+  cursor: pointer;
+}
+
 .heading {
   display: block !important;
   text-align: center;
@@ -92,6 +96,11 @@ select {
   background: rgba(0, 0, 0, 0.26);
   color: brown;
   transition: all 0.5s linear;
+}
+
+.--flex-align {
+  display: flex;
+  align-items: center;
 }
 
 .settings {

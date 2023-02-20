@@ -4,6 +4,9 @@ import {
   ALL_BLOG_FAIL,
   ALL_BLOG_REQUEST,
   ALL_BLOG_SUCCESS,
+  ALL_COMMENT_FAIL,
+  ALL_COMMENT_REQUEST,
+  ALL_COMMENT_SUCCESS,
   BLOG_DETAILS_FAIL,
   BLOG_DETAILS_REQUEST,
   BLOG_DETAILS_SUCCESS,
@@ -11,12 +14,18 @@ import {
   DELETE_BLOG_FAIL,
   DELETE_BLOG_REQUEST,
   DELETE_BLOG_SUCCESS,
+  DELETE_COMMENT_FAIL,
+  DELETE_COMMENT_REQUEST,
+  DELETE_COMMENT_SUCCESS,
   MY_BLOG_FAIL,
   MY_BLOG_REQUEST,
   MY_BLOG_SUCCESS,
   NEW_BLOG_FAIL,
   NEW_BLOG_REQUEST,
   NEW_BLOG_SUCCESS,
+  NEW_COMMENT_FAIL,
+  NEW_COMMENT_REQUEST,
+  NEW_COMMENT_SUCCESS,
   UPDATE_BLOG_FAIL,
   UPDATE_BLOG_REQUEST,
   UPDATE_BLOG_SUCCESS,
@@ -172,6 +181,92 @@ export const deleteBlogs = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_BLOG_FAIL,
+      payload:
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString(),
+    });
+  }
+};
+
+// NEW COMMENTS
+export const newComments = (commentData) => async (dispatch) => {
+  try {
+    dispatch({ type: NEW_COMMENT_REQUEST });
+
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+    };
+
+    const { data } = await axios.put(
+      `${BACKEND_URL}/api/blogs/comment`,
+      commentData,
+      config
+    );
+
+    dispatch({ type: NEW_COMMENT_SUCCESS, payload: data });
+    toast.success(data.message);
+  } catch (error) {
+    dispatch({
+      type: NEW_COMMENT_FAIL,
+      payload:
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString(),
+    });
+  }
+};
+
+// Get All Comments
+export const getAllComment = (commentId) => async (dispatch) => {
+  try {
+    dispatch({ type: ALL_COMMENT_REQUEST });
+
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+    };
+    const { data } = await axios.get(
+      `${BACKEND_URL}/api/comment/comments?id=${commentId}`,
+      config
+    );
+
+    dispatch({ type: ALL_COMMENT_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: ALL_COMMENT_FAIL,
+      payload:
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString(),
+    });
+  }
+};
+
+// Delete COMMENTS
+export const deleteComments = (commentId, blogId) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_COMMENT_REQUEST });
+
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+    };
+
+    const { data } = await axios.delete(
+      `${BACKEND_URL}/api/blogs/comment?blogId=${blogId}&id=${commentId}`,
+      config
+    );
+
+    dispatch({ type: DELETE_COMMENT_SUCCESS, payload: data });
+    toast.success(data.message);
+  } catch (error) {
+    dispatch({
+      type: DELETE_COMMENT_FAIL,
       payload:
         (error.response &&
           error.response.data &&

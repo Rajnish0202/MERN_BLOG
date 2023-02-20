@@ -13,7 +13,6 @@ import { DELETE_BLOG_RESET } from '../../redux/constants/blogConstant';
 import MetaData from '../../utils/MetaData';
 import styles from './MyBlog.module.css';
 import { BsEmojiFrown } from 'react-icons/bs';
-import Loader from '../../components/Loader/Loader';
 import Pagination from 'react-js-pagination';
 
 const MyBlogs = () => {

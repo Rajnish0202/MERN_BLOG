@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '../Card/Card';
 import styles from './BlogList.module.css';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaComment, FaComments, FaEdit, FaTrash } from 'react-icons/fa';
 import DOMPurify from 'dompurify';
-import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { Spinner } from '../Loader/Loader';
+import Comment from '../comment/Comment';
+import CommentBox from '../comment/CommentBox';
+import {
+  clearError,
+  deleteComments,
+  newComments,
+} from '../../redux/actions/blogActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import {
+  DELETE_COMMENT_RESET,
+  NEW_COMMENT_RESET,
+} from '../../redux/constants/blogConstant';
+import { confirmDelete } from '../../utils/deleteAlert';
 
 const BlogList = ({
   blogs,
@@ -16,22 +29,54 @@ const BlogList = ({
   blogDeleteHandler,
   loading,
 }) => {
-  const confirmDelete = (id) => {
-    confirmAlert({
-      title: `Delete Product `,
-      message: 'Are you sure to do this.',
-      buttons: [
-        {
-          label: 'Delete',
-          onClick: () => blogDeleteHandler(id),
-        },
-        {
-          label: 'Cancel',
-          // onClick: () => alert('Click No'),
-        },
-      ],
-    });
+  const { success, error } = useSelector((state) => state.newComment);
+  const { isDeleted, error: deleteCommentError } = useSelector(
+    (state) => state.commentAction
+  );
+  const dispatch = useDispatch();
+
+  const [showComment, setShowComment] = useState(false);
+  const [addComment, setAddComment] = useState(false);
+  const [commentInput, setCommentInput] = useState('');
+  const [blogId, setBlogId] = useState('');
+
+  const addCommentHandler = (e) => {
+    e.preventDefault();
+
+    if (!commentInput) {
+      return toast.error('Please write comment!');
+    }
+
+    const myForm = new FormData();
+
+    myForm.set('comment', commentInput);
+    myForm.set('blogId', blogId);
+
+    dispatch(newComments(myForm));
   };
+
+  const commentHandler = (commentId, blogId) => {
+    dispatch(deleteComments(commentId, blogId));
+  };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearError());
+    }
+    if (deleteCommentError) {
+      toast.error(deleteCommentError);
+      dispatch(clearError());
+    }
+
+    if (success) {
+      dispatch({ type: NEW_COMMENT_RESET });
+    }
+
+    if (isDeleted) {
+      dispatch({ type: DELETE_COMMENT_RESET });
+    }
+  }, [error, dispatch, success, blogId, isDeleted, deleteCommentError]);
 
   return (
     <>
@@ -77,7 +122,9 @@ const BlogList = ({
                           </Link>
                           <button
                             disabled={deleteLoading ? true : false}
-                            onClick={() => confirmDelete(blog?._id)}
+                            onClick={() =>
+                              confirmDelete(blog?._id, blogDeleteHandler)
+                            }
                           >
                             <FaTrash />
                           </button>
@@ -100,9 +147,52 @@ const BlogList = ({
                         ),
                       }}
                     ></span>{' '}
-                    <Link to={`blog/${blog._id}`}>...Read more</Link>
+                    <Link to={`/blog/${blog._id}`}>...Read more</Link>
                   </div>
                 </div>
+                <div className={styles.commentLink}>
+                  <button
+                    className='--btn'
+                    onClick={() => [
+                      setAddComment(!addComment),
+                      setBlogId(blog?._id),
+                    ]}
+                  >
+                    <FaComment size={25} color='brown' />
+                    <p>Add Comment</p>
+                  </button>
+                  {blog?.comments && blog?.comments?.length > 0 && (
+                    <button
+                      className='--btn'
+                      onClick={() => setShowComment(!showComment)}
+                    >
+                      <span className='--flex-align'>
+                        <FaComments size={25} color='brown' />
+                        <p>
+                          {blog?.comments?.length}{' '}
+                          {blog?.comments?.length > 1 ? 'Comments' : 'Comment'}
+                        </p>
+                      </span>
+                    </button>
+                  )}
+                </div>
+                {addComment && (
+                  <CommentBox
+                    addCommentHandler={addCommentHandler}
+                    commentInput={commentInput}
+                    setCommentInput={setCommentInput}
+                  />
+                )}
+
+                {blog?.comments && blog?.comments?.length > 0 && (
+                  <Comment
+                    showComment={showComment}
+                    setShowComment={setShowComment}
+                    blog={blog}
+                    user={user}
+                    commentHandler={commentHandler}
+                  />
+                )}
               </Card>
             );
           })}

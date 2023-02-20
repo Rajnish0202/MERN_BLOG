@@ -10,6 +10,9 @@ import {
   DELETE_BLOG_REQUEST,
   DELETE_BLOG_RESET,
   DELETE_BLOG_SUCCESS,
+  DELETE_COMMENT_FAIL,
+  DELETE_COMMENT_REQUEST,
+  DELETE_COMMENT_SUCCESS,
   MY_BLOG_FAIL,
   MY_BLOG_REQUEST,
   MY_BLOG_SUCCESS,
@@ -17,6 +20,10 @@ import {
   NEW_BLOG_REQUEST,
   NEW_BLOG_RESET,
   NEW_BLOG_SUCCESS,
+  NEW_COMMENT_FAIL,
+  NEW_COMMENT_REQUEST,
+  NEW_COMMENT_RESET,
+  NEW_COMMENT_SUCCESS,
   UPDATE_BLOG_FAIL,
   UPDATE_BLOG_REQUEST,
   UPDATE_BLOG_RESET,
@@ -200,6 +207,84 @@ export const actionBlogsReducer = (state = {}, action) => {
       return {
         ...state,
         isUpdated: false,
+      };
+
+    case DELETE_BLOG_RESET:
+      return {
+        ...state,
+        isDeleted: false,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+// New Comments
+export const newCommentReducer = (state = {}, action) => {
+  switch (action.type) {
+    case NEW_COMMENT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case NEW_COMMENT_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.success,
+      };
+
+    case NEW_COMMENT_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case NEW_COMMENT_RESET:
+      return {
+        ...state,
+        success: false,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+// Comment Action
+export const commentReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_COMMENT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DELETE_COMMENT_SUCCESS:
+      return {
+        loading: false,
+        isDeleted: action.payload.success,
+      };
+
+    case DELETE_COMMENT_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
 
     case DELETE_BLOG_RESET:

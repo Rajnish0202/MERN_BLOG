@@ -33,7 +33,7 @@ const UserProfile = () => {
         </div>
         <div className={styles.profileContainer}>
           <div>
-            <h2>User Profile: </h2>
+            <h2>User Profile</h2>
             <div className={styles.imageContainer}>
               <img src={user?.avataar?.url} alt={user?.avataar?.public_id} />
             </div>

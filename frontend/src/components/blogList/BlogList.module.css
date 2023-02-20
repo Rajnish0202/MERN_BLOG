@@ -83,3 +83,18 @@
   color: brown;
   transition: all 0.5s linear;
 }
+
+.commentLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+
+.commentLink p {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-family: 'Satisfy', cursive;
+  margin-left: 1rem;
+}

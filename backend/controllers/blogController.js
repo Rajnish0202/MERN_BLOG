@@ -79,7 +79,8 @@ const getAllBlog = asyncHandler(async (req, res) => {
     .sort(sortBy)
     .skip(page * limit)
     .limit(limit)
-    .populate('author', ['name', 'avataar', 'bio']);
+    .populate('author', ['name', 'avataar', 'bio'])
+    .populate('comments.user', ['avataar']);
 
   const total = await Blog.countDocuments({
     category: { $in: [...categories] },
@@ -99,11 +100,9 @@ const getAllBlog = asyncHandler(async (req, res) => {
 
 // Get All Blog
 const getBlogDetails = asyncHandler(async (req, res) => {
-  const blog = await Blog.findById(req.params.id).populate('author', [
-    'avataar',
-    'bio',
-    'name',
-  ]);
+  const blog = await Blog.findById(req.params.id)
+    .populate('author', ['avataar', 'bio', 'name'])
+    .populate('comments.user', ['avataar']);
 
   res.status(200).json({
     success: true,
@@ -143,6 +142,7 @@ const myBlogs = asyncHandler(async (req, res) => {
     .sort(sortBy)
     .skip(page * limit)
     .limit(limit)
+    .populate('comments.user', ['avataar'])
     .populate('author', ['name', 'avataar', 'bio']);
 
   const total = await Blog.countDocuments({
@@ -178,7 +178,7 @@ const updateBlog = asyncHandler(async (req, res) => {
     throw new Error('User not authorized!');
   }
 
-  if (req.body.image !== undefined) {
+  if (req.body.image !== '') {
     await cloudinary.uploader.destroy(blog.image.public_id, {
       folder: 'Blog-Post',
     });
@@ -201,8 +201,8 @@ const updateBlog = asyncHandler(async (req, res) => {
     }
 
     fileData = {
-      public_id: uploadedFile.public_id,
-      url: uploadedFile.secure_url,
+      public_id: uploadedFile.public_id || blog.image.public_id,
+      url: uploadedFile.secure_url || blog.image.url,
     };
   }
 
@@ -254,6 +254,89 @@ const deleteMyBlog = asyncHandler(async (req, res) => {
   });
 });
 
+// Create Comments
+const createComment = asyncHandler(async (req, res) => {
+  const { comment, blogId } = req.body;
+
+  const commentObj = {
+    user: req.user._id,
+    name: req.user.name,
+    comment,
+  };
+
+  const blog = await Blog.findById(blogId);
+
+  const isCommented = blog.comments.find(
+    (com) => com.user.toString() === req.user._id.toString()
+  );
+
+  if (isCommented) {
+    blog.comments.forEach((com) => {
+      if (com.user.toString() === req.user._id.toString())
+        com.comment = comment;
+    });
+  } else {
+    blog.comments.push(commentObj);
+    blog.numOfComments = blog.comments.length;
+  }
+
+  await blog.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true,
+    message: 'Your comment saved.',
+  });
+});
+
+// Get All Comments
+const getAllComments = asyncHandler(async (req, res) => {
+  const blog = await Blog.findById(req.query.id);
+
+  if (!blog) {
+    res.status(404);
+    throw new Error('Blog not found.');
+  }
+
+  res.status(200).json({
+    success: true,
+    comments: blog.comments,
+  });
+});
+
+// Delete Comments
+const deleteComments = asyncHandler(async (req, res) => {
+  const blog = await Blog.findById(req.query.blogId);
+
+  if (!blog) {
+    res.status(404);
+    throw new Error('Blog not found!');
+  }
+
+  const comments = blog.comments.filter(
+    (com) => com._id.toString() !== req.query.id.toString()
+  );
+
+  const numOfComments = comments.length;
+
+  await Blog.findByIdAndUpdate(
+    req.query.blogId,
+    {
+      comments,
+      numOfComments,
+    },
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+    message: 'Comment deleted successfully.',
+  });
+});
+
 module.exports = {
   postBlog,
   getAllBlog,
@@ -261,4 +344,7 @@ module.exports = {
   myBlogs,
   updateBlog,
   deleteMyBlog,
+  createComment,
+  getAllComments,
+  deleteComments,
 };

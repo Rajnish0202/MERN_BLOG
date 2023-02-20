@@ -6,8 +6,10 @@ import {
   actionBlogsReducer,
   blogDetailsReducer,
   blogsReducer,
+  commentReducer,
   myBlogsReducer,
   newBlogsReducer,
+  newCommentReducer,
 } from './reducers/blogsReducer';
 import {
   forgotPasswordReducer,
@@ -26,6 +28,8 @@ const reducer = combineReducers({
   userProfile: userUpdateReducer,
   forgotPassword: forgotPasswordReducer,
   contactUs: contactUsReducer,
+  newComment: newCommentReducer,
+  commentAction: commentReducer,
 });
 
 let initialState = {};
