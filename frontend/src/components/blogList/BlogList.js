@@ -35,10 +35,27 @@ const BlogList = ({
   );
   const dispatch = useDispatch();
 
-  const [showComment, setShowComment] = useState(false);
-  const [addComment, setAddComment] = useState(false);
+  const [showComment, setShowComment] = useState(null);
+  const [addComment, setAddComment] = useState(null);
   const [commentInput, setCommentInput] = useState('');
   const [blogId, setBlogId] = useState('');
+
+  const toggle = (i) => {
+    if (addComment === i) {
+      return setAddComment(null);
+    }
+    console.log(i);
+
+    setAddComment(i);
+  };
+
+  const toggleComment = (i) => {
+    if (showComment === i) {
+      return setShowComment(null);
+    }
+
+    setShowComment(i);
+  };
 
   const addCommentHandler = (e) => {
     e.preventDefault();
@@ -83,7 +100,7 @@ const BlogList = ({
       <div className={styles.blogList}>
         {loading && <Spinner />}
         {blogs &&
-          blogs.map((blog) => {
+          blogs.map((blog, i) => {
             return (
               <Card key={blog._id}>
                 <div className={styles.blog}>
@@ -153,19 +170,13 @@ const BlogList = ({
                 <div className={styles.commentLink}>
                   <button
                     className='--btn'
-                    onClick={() => [
-                      setAddComment(!addComment),
-                      setBlogId(blog?._id),
-                    ]}
+                    onClick={() => [toggle(i), setBlogId(blog?._id)]}
                   >
                     <FaComment size={25} color='brown' />
                     <p>Add Comment</p>
                   </button>
                   {blog?.comments && blog?.comments?.length > 0 && (
-                    <button
-                      className='--btn'
-                      onClick={() => setShowComment(!showComment)}
-                    >
+                    <button className='--btn' onClick={() => toggleComment(i)}>
                       <span className='--flex-align'>
                         <FaComments size={25} color='brown' />
                         <p>
@@ -176,21 +187,22 @@ const BlogList = ({
                     </button>
                   )}
                 </div>
-                {addComment && (
+                {addComment === i && (
                   <CommentBox
                     addCommentHandler={addCommentHandler}
                     commentInput={commentInput}
                     setCommentInput={setCommentInput}
+                    addComment={addComment}
                   />
                 )}
 
                 {blog?.comments && blog?.comments?.length > 0 && (
                   <Comment
                     showComment={showComment}
-                    setShowComment={setShowComment}
                     blog={blog}
                     user={user}
                     commentHandler={commentHandler}
+                    index={i}
                   />
                 )}
               </Card>

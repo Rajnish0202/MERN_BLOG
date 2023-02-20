@@ -4,11 +4,11 @@ import { capitalizeText } from '../../utils/captilizeFirstLetter';
 import { confirmDelete } from '../../utils/deleteAlert';
 import styles from './Comment.module.css';
 
-const Comment = ({ blog, showComment, user, commentHandler }) => {
+const Comment = ({ blog, showComment, user, commentHandler, index }) => {
   return (
     <>
       <div className={styles.comments}>
-        {showComment && (
+        {showComment === index && (
           <>
             <div className={styles.commentList}>
               <ul className={styles.list}>
