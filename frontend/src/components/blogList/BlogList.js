@@ -196,15 +196,16 @@ const BlogList = ({
                   />
                 )}
 
-                {blog?.comments && blog?.comments?.length > 0 && (
-                  <Comment
-                    showComment={showComment}
-                    blog={blog}
-                    user={user}
-                    commentHandler={commentHandler}
-                    index={i}
-                  />
-                )}
+                {blog?.comments &&
+                  blog?.comments?.length > 0 &&
+                  showComment === i && (
+                    <Comment
+                      showComment={showComment}
+                      blog={blog}
+                      user={user}
+                      commentHandler={commentHandler}
+                    />
+                  )}
               </Card>
             );
           })}

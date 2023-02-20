@@ -232,7 +232,7 @@ const BlogDetails = () => {
             />
           )}
 
-          {blog?.comments && blog?.comments?.length > 0 && (
+          {blog?.comments && blog?.comments?.length > 0 && showComment && (
             <Comment
               showComment={showComment}
               setShowComment={setShowComment}
