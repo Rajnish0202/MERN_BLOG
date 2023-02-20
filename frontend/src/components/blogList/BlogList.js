@@ -12,6 +12,7 @@ import CommentBox from '../comment/CommentBox';
 import {
   clearError,
   deleteComments,
+  getAllComment,
   newComments,
 } from '../../redux/actions/blogActions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,6 +34,13 @@ const BlogList = ({
   const { isDeleted, error: deleteCommentError } = useSelector(
     (state) => state.commentAction
   );
+
+  const {
+    comments,
+    loading: commentLoading,
+    error: commentError,
+  } = useSelector((state) => state.allComments);
+
   const dispatch = useDispatch();
 
   const [showComment, setShowComment] = useState(null);
@@ -44,17 +52,17 @@ const BlogList = ({
     if (addComment === i) {
       return setAddComment(null);
     }
-    console.log(i);
 
     setAddComment(i);
   };
 
-  const toggleComment = (i) => {
+  const toggleComment = (i, id) => {
     if (showComment === i) {
       return setShowComment(null);
     }
 
     setShowComment(i);
+    dispatch(getAllComment(id));
   };
 
   const addCommentHandler = (e) => {
@@ -87,13 +95,29 @@ const BlogList = ({
     }
 
     if (success) {
+      dispatch(getAllComment(blogId));
       dispatch({ type: NEW_COMMENT_RESET });
+      setAddComment(null);
     }
 
     if (isDeleted) {
       dispatch({ type: DELETE_COMMENT_RESET });
+      dispatch(getAllComment(blogId));
     }
-  }, [error, dispatch, success, blogId, isDeleted, deleteCommentError]);
+
+    if (commentError) {
+      toast.error(commentError);
+      dispatch(clearError());
+    }
+  }, [
+    error,
+    dispatch,
+    success,
+    blogId,
+    isDeleted,
+    deleteCommentError,
+    commentError,
+  ]);
 
   return (
     <>
@@ -176,7 +200,10 @@ const BlogList = ({
                     <p>Add Comment</p>
                   </button>
                   {blog?.comments && blog?.comments?.length > 0 && (
-                    <button className='--btn' onClick={() => toggleComment(i)}>
+                    <button
+                      className='--btn'
+                      onClick={() => toggleComment(i, blog?._id)}
+                    >
                       <span className='--flex-align'>
                         <FaComments size={25} color='brown' />
                         <p>
@@ -196,16 +223,16 @@ const BlogList = ({
                   />
                 )}
 
-                {blog?.comments &&
-                  blog?.comments?.length > 0 &&
-                  showComment === i && (
-                    <Comment
-                      showComment={showComment}
-                      blog={blog}
-                      user={user}
-                      commentHandler={commentHandler}
-                    />
-                  )}
+                {comments && comments?.length > 0 && showComment === i && (
+                  <Comment
+                    showComment={showComment}
+                    comments={comments}
+                    user={user}
+                    commentHandler={commentHandler}
+                    loading={commentLoading}
+                    blogId={blog?._id}
+                  />
+                )}
               </Card>
             );
           })}

@@ -290,7 +290,9 @@ const createComment = asyncHandler(async (req, res) => {
 
 // Get All Comments
 const getAllComments = asyncHandler(async (req, res) => {
-  const blog = await Blog.findById(req.query.id);
+  const blog = await Blog.findById(req.query.id).populate('comments.user', [
+    'avataar',
+  ]);
 
   if (!blog) {
     res.status(404);

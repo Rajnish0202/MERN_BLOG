@@ -7,6 +7,7 @@ import {
   blogDetailsReducer,
   blogsReducer,
   commentReducer,
+  commentsReducer,
   myBlogsReducer,
   newBlogsReducer,
   newCommentReducer,
@@ -30,6 +31,7 @@ const reducer = combineReducers({
   contactUs: contactUsReducer,
   newComment: newCommentReducer,
   commentAction: commentReducer,
+  allComments: commentsReducer,
 });
 
 let initialState = {};

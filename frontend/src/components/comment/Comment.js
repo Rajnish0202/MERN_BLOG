@@ -3,16 +3,19 @@ import { FaTrash } from 'react-icons/fa';
 import { capitalizeText } from '../../utils/captilizeFirstLetter';
 import { confirmDelete } from '../../utils/deleteAlert';
 import styles from './Comment.module.css';
+import { Spinner } from '../Loader/Loader';
 
-const Comment = ({ blog, user, commentHandler }) => {
+const Comment = ({ comments, loading, user, commentHandler, blogId }) => {
   return (
     <>
+      {loading && <Spinner />}
+
       <div className={styles.comments}>
         <>
           <div className={styles.commentList}>
             <ul className={styles.list}>
-              {blog?.comments &&
-                blog?.comments.map((comment) => {
+              {comments &&
+                comments.map((comment) => {
                   return (
                     <li key={comment._id}>
                       <div className={styles.image}>
@@ -36,7 +39,7 @@ const Comment = ({ blog, user, commentHandler }) => {
                             confirmDelete(
                               comment?._id,
                               commentHandler,
-                              blog?._id,
+                              blogId,
                               'Comment'
                             )
                           }

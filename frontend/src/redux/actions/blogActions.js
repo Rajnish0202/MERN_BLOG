@@ -230,11 +230,11 @@ export const getAllComment = (commentId) => async (dispatch) => {
       headers: { 'Content-Type': 'application/json' },
     };
     const { data } = await axios.get(
-      `${BACKEND_URL}/api/comment/comments?id=${commentId}`,
+      `${BACKEND_URL}/api/blogs/comment/comments?id=${commentId}`,
       config
     );
 
-    dispatch({ type: ALL_COMMENT_SUCCESS, payload: data });
+    dispatch({ type: ALL_COMMENT_SUCCESS, payload: data.comments });
   } catch (error) {
     dispatch({
       type: ALL_COMMENT_FAIL,

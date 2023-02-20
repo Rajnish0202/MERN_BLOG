@@ -2,6 +2,9 @@ import {
   ALL_BLOG_FAIL,
   ALL_BLOG_REQUEST,
   ALL_BLOG_SUCCESS,
+  ALL_COMMENT_FAIL,
+  ALL_COMMENT_REQUEST,
+  ALL_COMMENT_SUCCESS,
   BLOG_DETAILS_FAIL,
   BLOG_DETAILS_REQUEST,
   BLOG_DETAILS_SUCCESS,
@@ -291,6 +294,39 @@ export const commentReducer = (state = {}, action) => {
       return {
         ...state,
         isDeleted: false,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+// All Comments
+
+export const commentsReducer = (state = { comments: [] }, action) => {
+  switch (action.type) {
+    case ALL_COMMENT_REQUEST:
+      return {
+        loading: true,
+        blogs: [],
+      };
+
+    case ALL_COMMENT_SUCCESS:
+      return {
+        loading: false,
+        comments: action.payload,
+      };
+
+    case ALL_COMMENT_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
       };
 
     case CLEAR_ERRORS:

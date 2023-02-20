@@ -5,6 +5,7 @@ import {
   clearError,
   deleteBlogs,
   deleteComments,
+  getAllComment,
   getBlogDetails,
   newComments,
 } from '../../redux/actions/blogActions';
@@ -50,6 +51,12 @@ const BlogDetails = () => {
     (state) => state.commentAction
   );
 
+  const {
+    comments,
+    loading: commentLoading,
+    error: commentsError,
+  } = useSelector((state) => state.allComments);
+
   const [showComment, setShowComment] = useState(false);
   const [addComment, setAddComment] = useState(false);
   const [commentInput, setCommentInput] = useState('');
@@ -93,11 +100,13 @@ const BlogDetails = () => {
     if (success) {
       dispatch(getBlogDetails(id));
       dispatch({ type: NEW_COMMENT_RESET });
+      setAddComment(null);
     }
 
     if (isDeleted) {
       navigate('/');
       dispatch({ type: DELETE_BLOG_RESET });
+      dispatch(clearError());
     }
 
     if (deleteCommentError) {
@@ -110,7 +119,13 @@ const BlogDetails = () => {
       dispatch({ type: DELETE_COMMENT_RESET });
     }
 
+    if (commentsError) {
+      toast.error(commentsError);
+      dispatch(clearError());
+    }
+
     dispatch(getBlogDetails(id));
+    dispatch(getAllComment(id));
   }, [
     id,
     dispatch,
@@ -122,6 +137,7 @@ const BlogDetails = () => {
     commentError,
     deleteCommentError,
     commentDeleted,
+    commentsError,
   ]);
 
   return (
@@ -236,9 +252,11 @@ const BlogDetails = () => {
             <Comment
               showComment={showComment}
               setShowComment={setShowComment}
-              blog={blog}
+              comments={comments}
               user={user}
               commentHandler={commentHandler}
+              loading={commentLoading}
+              blogId={blog?._id}
             />
           )}
         </div>
