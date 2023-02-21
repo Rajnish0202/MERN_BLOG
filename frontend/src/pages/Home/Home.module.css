@@ -4,3 +4,17 @@
   padding: 2rem 5rem;
   column-gap: 1rem;
 }
+
+@media screen and (max-width: 768px) {
+  .home {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .home {
+    grid-template-columns: 1fr;
+    padding: 1rem 0.5rem;
+  }
+}

@@ -5,6 +5,7 @@ const blogSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
+      trim: true,
     },
     description: {
       type: String,
@@ -13,6 +14,7 @@ const blogSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
+      trim: true,
     },
     image: {
       public_id: {

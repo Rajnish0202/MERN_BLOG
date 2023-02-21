@@ -4,6 +4,7 @@
   height: fit-content;
   width: 100%;
   border-radius: 10px;
+  background: #fff;
 }
 
 .search {
@@ -78,4 +79,20 @@
 .filterBySort div {
   display: flex;
   align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    position: absolute;
+    top: 10%;
+    left: -100%;
+    margin: 0.2rem 0;
+    width: 100%;
+    transition: all 0.8s ease-in-out;
+  }
+
+  .sidebar.active {
+    left: 0;
+    width: 100%;
+  }
 }

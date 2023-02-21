@@ -100,3 +100,29 @@
 .forgot {
   height: calc(100vh - 80px - 8px);
 }
+
+@media screen and (max-width: 768px) {
+  .form {
+    width: 100%;
+  }
+
+  .form form {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .form {
+    width: 100%;
+  }
+
+  .form form {
+    width: 95%;
+    padding: 2rem 1rem;
+  }
+
+  .links p,
+  .links a {
+    font-size: 12px;
+  }
+}

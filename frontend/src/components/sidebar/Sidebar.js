@@ -10,9 +10,16 @@ const Sidebar = ({
   sort,
   setSort,
   categories,
+  searchToggle,
 }) => {
   return (
-    <div className={styles.sidebar}>
+    <div
+      className={
+        searchToggle
+          ? `${styles.sidebar} ${styles.active}`
+          : `${styles.sidebar}`
+      }
+    >
       <div className={styles.search}>
         <input
           type='text'

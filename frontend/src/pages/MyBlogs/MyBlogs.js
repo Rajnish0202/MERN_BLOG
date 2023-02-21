@@ -15,7 +15,7 @@ import styles from './MyBlog.module.css';
 import { BsEmojiFrown } from 'react-icons/bs';
 import Pagination from 'react-js-pagination';
 
-const MyBlogs = () => {
+const MyBlogs = ({ searchToggle }) => {
   const [sort, setSort] = useState({ sort: 'createdAt', order: 'desc' });
   const [filterCategory, setFilterCategory] = useState([]);
   const [page, setPage] = useState(1);
@@ -99,6 +99,7 @@ const MyBlogs = () => {
           sort={sort}
           setSort={setSort}
           categories={categories}
+          searchToggle={searchToggle}
         />
       </section>
       {total > blogCounts && blogCounts >= limit && (

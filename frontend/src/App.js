@@ -8,7 +8,7 @@ import BlogDetails from './pages/BlogDetails/BlogDetails';
 import Register from './pages/Auth/Register';
 import Login from './pages/Auth/Login';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { loadUser } from './redux/actions/userAction';
 import axios from 'axios';
 import UserProfile from './pages/UserProfile/UserProfile';
@@ -28,6 +28,19 @@ function App() {
   const { isLoggedIn } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  const [searchToggle, setSearchToggle] = useState(false);
+  const [navToggle, setNavToggle] = useState(false);
+
+  const navHandler = () => {
+    setNavToggle(!navToggle);
+    setSearchToggle(false);
+  };
+
+  const searchToggleHandler = () => {
+    setSearchToggle(!searchToggle);
+    setNavToggle(false);
+  };
+
   useEffect(() => {
     dispatch(loadUser());
   }, [dispatch]);
@@ -35,9 +48,14 @@ function App() {
   return (
     <Router>
       <ToastContainer style={{ fontSize: '16px' }} position='top-center' />
-      <Layout>
+      <Layout
+        navToggle={navToggle}
+        setNavToggle={setNavToggle}
+        navHandler={navHandler}
+        searchToggleHandler={searchToggleHandler}
+      >
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Home searchToggle={searchToggle} />} />
           <Route path='/about' element={<About />} />
           <Route path='/blog/:id' element={<BlogDetails />} />
           <Route path='/register' element={<Register />} />
@@ -65,7 +83,9 @@ function App() {
 
           <Route
             path='/myblog'
-            element={isLoggedIn ? <MyBlogs /> : <Login />}
+            element={
+              isLoggedIn ? <MyBlogs searchToggle={searchToggle} /> : <Login />
+            }
           />
 
           <Route

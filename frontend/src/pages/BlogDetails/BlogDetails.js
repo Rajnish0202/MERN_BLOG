@@ -146,7 +146,45 @@ const BlogDetails = () => {
       <section className={styles.details}>
         {loading && <Loader />}
         <div className={styles.banner}>
-          <img src={bannerImg} alt={blog.title} />
+          <img
+            src={
+              blog?.category === 'nature'
+                ? 'https://res.cloudinary.com/dukdn1bpp/image/upload/v1676887262/MyCollections/nature_act9tl.jpg'
+                : bannerImg && blog?.category === 'adventure'
+                ? 'https://res.cloudinary.com/dukdn1bpp/image/upload/v1676887400/MyCollections/adventure_k9fxnn.jpg'
+                : bannerImg && blog?.category === 'melody'
+                ? 'https://res.cloudinary.com/dukdn1bpp/image/upload/v1676887343/MyCollections/melody_lwovfm.jpg'
+                : bannerImg && blog?.category === 'travel'
+                ? 'https://res.cloudinary.com/dukdn1bpp/image/upload/v1676887713/MyCollections/travel_bia7sm.jpg'
+                : bannerImg && blog?.category === 'love'
+                ? 'https://res.cloudinary.com/dukdn1bpp/image/upload/v1676887702/MyCollections/romance_cgio0i.jpg'
+                : bannerImg && blog?.category === 'historical'
+                ? 'https://res.cloudinary.com/dukdn1bpp/image/upload/v1676887529/MyCollections/Historical_uatjp4.jpg'
+                : bannerImg && blog?.category === 'beach'
+                ? 'https://res.cloudinary.com/dukdn1bpp/image/upload/v1676887461/MyCollections/beach_mxfwve.jpg'
+                : bannerImg && blog?.category === 'music'
+                ? 'https://res.cloudinary.com/dukdn1bpp/image/upload/v1676993563/MyCollections/musics_ccglbh.jpg'
+                : bannerImg && blog?.category === 'safari'
+                ? 'https://res.cloudinary.com/dukdn1bpp/image/upload/v1676993568/MyCollections/safari_n2bgcv.jpg'
+                : bannerImg && blog?.category === 'sports'
+                ? 'https://res.cloudinary.com/dukdn1bpp/image/upload/v1676993561/MyCollections/sports_zbotze.jpg'
+                : bannerImg
+            }
+            alt={blog.title}
+          />
+
+          {/* {coverImages &&
+            coverImages.map((img) =>
+              img?.category === blog?.category ? (
+                <img src={img.src} key={img.id} alt={blog?.title} />
+              ) : (
+                <img
+                  src='https://res.cloudinary.com/dukdn1bpp/image/upload/v1676892720/MyCollections/HeroImg_y5dhdm.jpg'
+                  alt={blog?.title}
+                />
+              )
+            )} */}
+
           <div className={styles.back}>
             <Link to='/'>&larr; Back</Link>
           </div>
@@ -159,18 +197,23 @@ const BlogDetails = () => {
                   <img
                     src={blog?.author?.avataar?.url}
                     alt={blog?.author?.avataar?.public_id}
+                    title={blog?.author?.name}
                   />
                 </Link>
-                <p>{blog?.author?.name}</p>
+                <p title={blog?.author?.name}>
+                  {window.innerWidth > 600
+                    ? `${blog?.author?.name}`
+                    : `${blog?.author?.name.split(' ')[0]}`}
+                </p>
               </div>
               <div className={styles.moreDetails}>
                 <p>
                   {blog?.createdAt !== blog?.updatedAt
                     ? `UpdatedAt: ${moment(blog?.updatedAt).format(
-                        'MMMM Do YYYY, h:mm:ss a'
+                        'MM Do YYYY, h:mm:ss a'
                       )}`
                     : `CreatedAt: ${moment(blog?.createdAt).format(
-                        'MMMM Do YYYY, h:mm:ss a'
+                        'MM Do YYYY, h:mm:ss a'
                       )}`}
                 </p>
                 <b>

@@ -143,3 +143,36 @@
 .details a {
   color: #fff;
 }
+
+@media screen and (max-width: 768px) {
+  .profile {
+    grid-template-columns: 1fr;
+    margin: 1rem;
+  }
+
+  .profileContainer {
+    padding: 1rem;
+  }
+
+  .formGroup input {
+    font-size: 14px;
+  }
+
+  .infoBox {
+    grid-template-columns: 1fr;
+  }
+
+  .infoBox form {
+    border-bottom: 2px solid rgba(0, 0, 0, 0.35);
+    border-right: none;
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .profileContainer {
+    padding: 0.5rem;
+    width: 100%;
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.35);
+  }
+}

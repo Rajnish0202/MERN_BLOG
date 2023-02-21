@@ -132,10 +132,10 @@ const BlogList = ({
                     <code>
                       {blog?.createdAt !== blog?.updatedAt
                         ? `UpdatedAt: ${moment(blog?.updatedAt).format(
-                            'MMMM Do YYYY, h:mm:ss a'
+                            'MM Do YYYY, h:mm:ss a'
                           )}`
                         : `CreatedAt: ${moment(blog?.createdAt).format(
-                            'MMMM Do YYYY, h:mm:ss a'
+                            'MM Do YYYY, h:mm:ss a'
                           )}`}
                     </code>
                     <b>

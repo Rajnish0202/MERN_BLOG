@@ -17,7 +17,7 @@ import Loader from '../../components/Loader/Loader';
 import Pagination from 'react-js-pagination';
 import { BsEmojiFrown } from 'react-icons/bs';
 
-const Home = () => {
+const Home = ({ searchToggle }) => {
   const [sort, setSort] = useState({ sort: 'createdAt', order: 'desc' });
   const [filterCategory, setFilterCategory] = useState([]);
   const [page, setPage] = useState(1);
@@ -106,6 +106,7 @@ const Home = () => {
           sort={sort}
           setSort={setSort}
           categories={categories}
+          searchToggle={searchToggle}
         />
       </section>
       {total > blogCounts && blogCounts >= limit && (

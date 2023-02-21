@@ -64,6 +64,11 @@ const UpdatePassword = () => {
       <section className={styles.profile}>
         <div className='settings'>
           <ul>
+            {window.innerWidth <= 768 && (
+              <Link to='/'>
+                <li>Home</li>
+              </Link>
+            )}
             <Link to='/profile'>
               <li>Profile</li>
             </Link>
