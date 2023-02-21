@@ -55,6 +55,10 @@ const UpdateBlog = () => {
   const updateBlogSubmitHandler = (e) => {
     e.preventDefault();
 
+    if (!image) {
+      return toast.error(`Please provide your blog's image !`);
+    }
+
     const myForm = new FormData();
     myForm.set('title', title);
     myForm.set('category', category);

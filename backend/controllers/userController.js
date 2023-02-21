@@ -51,7 +51,8 @@ const registerUser = asyncHandler(async (req, res) => {
   res.cookie('token', token, {
     httpOnly: true,
     expires: new Date(Date.now() + 1000 * 24 * 60 * 60 * 7), //7 days
-    // sameSite: 'none',
+    sameSite: 'none',
+    secure: true,
   });
 
   if (user) {
@@ -94,7 +95,8 @@ const loginUser = asyncHandler(async (req, res) => {
     res.cookie('token', token, {
       httpOnly: true,
       expires: new Date(Date.now() + 1000 * 60 * 24 * 60 * 7), //7 days
-      // sameSite: 'none',
+      sameSite: 'none',
+      secure: true,
     });
   }
 
@@ -116,6 +118,8 @@ const logoutUser = asyncHandler(async (req, res) => {
   res.cookie('token', '', {
     httpOnly: true,
     expires: new Date(Date.now()),
+    sameSite: 'none',
+    secure: true,
   });
   return res.status(200).json({
     success: true,

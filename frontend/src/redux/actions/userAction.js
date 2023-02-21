@@ -31,9 +31,21 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 export const register = (formData) => async (dispatch) => {
   try {
     dispatch({ type: REGISTER_REQUEST });
+
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      withCredentials: true,
+    };
+
     const { data } = await axios.post(
       `${BACKEND_URL}/api/users/register`,
-      formData
+      formData,
+      config
     );
 
     dispatch({ type: REGISTER_SUCCESS, payload: data });
@@ -56,9 +68,21 @@ export const register = (formData) => async (dispatch) => {
 export const login = (formData) => async (dispatch) => {
   try {
     dispatch({ type: LOGIN_REQUEST });
+
+    const config = {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      withCredentials: true,
+    };
+
     const { data } = await axios.post(
       `${BACKEND_URL}/api/users/login`,
-      formData
+      formData,
+      config
     );
 
     dispatch({ type: LOGIN_SUCCESS, payload: data });
@@ -121,7 +145,15 @@ export const updateProfile = (formData) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUEST });
 
-    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    const config = {
+      headers: {
+        Accept: 'multipart/form-data',
+        'Content-Type': 'multipart/form-data',
+      },
+      mode: 'cors',
+      credentials: 'include',
+      withCredentials: true,
+    };
 
     const { data } = await axios.put(
       `${BACKEND_URL}/api/users/updateprofile`,

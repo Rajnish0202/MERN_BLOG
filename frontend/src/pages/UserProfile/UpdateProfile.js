@@ -33,7 +33,7 @@ const UpdateProfile = () => {
     e.preventDefault();
 
     if (!image) {
-      return toast.error('Please update your profile avataar!');
+      return toast.error('Please provide your profile avataar!');
     }
 
     const myForm = new FormData();
